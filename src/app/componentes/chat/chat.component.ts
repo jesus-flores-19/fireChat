@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FirechatService } from 'src/app/service/firechat.service';
 
 @Component({
   selector: 'app-chat',
@@ -7,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChatComponent implements OnInit {
 
-  constructor() { }
+  constructor(public firechat: FirechatService) { 
+    this.firechat.obtenerCollection().subscribe();
+    console.log(this.firechat.chats);
+    
+  }
 
   mensaje: any = "";
 
