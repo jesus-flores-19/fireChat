@@ -9,9 +9,5 @@ import { FirechatService } from './service/firechat.service';
 })
 export class AppComponent {
   title = 'fireChat';
-  public items: Observable<any[]>
-
-  constructor(private fireService: FirechatService){
-    this.items = this.fireService.obtenerCollection()
-  }
+  
 }
