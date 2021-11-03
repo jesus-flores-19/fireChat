@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
+import { FirechatService } from './service/firechat.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +9,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'fireChat';
+  public items: Observable<any[]>
+
+  constructor(private fireService: FirechatService){
+    this.items = this.fireService.obtenerCollection()
+  }
 }
