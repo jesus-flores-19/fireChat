@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collectionData, collection} from '@angular/fire/firestore';
+import { Firestore, collectionData, collection, addDoc} from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import {map} from "rxjs/operators";
 import { Mensaje } from "../interface/mensaje.interface"
@@ -21,7 +21,11 @@ export class FirechatService {
                            const mensajes = data as Mensaje[]
                            this.chats = mensajes
                            console.log(this.chats);
-                        }))
-                        
+                        }))                
+  }
+
+  agregarMensaje(mensaje: Mensaje){
+    const dataCol = collection(this.firestore, "chats");
+    return addDoc(dataCol, mensaje)
   }
 }
