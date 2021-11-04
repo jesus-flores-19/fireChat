@@ -3,9 +3,5 @@
         <span class="badge bg-primary">Fernando</span>
         <p>{{chat.mensaje}}</p>
     </div>
-    <div>
-        <span class="badge bg-success">Susana</span>
-        <p>Este es otro mensaje del chat</p>
-    </div>
 </div>
-<input type="text" name="mensaje" class="form-control" [(ngModel)]="mensaje" (keyup.enter)="enviarMensaje()" placeholder="Escribir mensaje...">
+<input type="text" name="mensaje" class="form-control" [(ngModel)]="data.mensaje" (keyup.enter)="enviarMensaje()" placeholder="Escribir mensaje...">>
