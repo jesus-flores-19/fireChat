@@ -38,7 +38,6 @@ export class ChatComponent implements OnInit {
       alert("escogueee un usuario xd")
       return;
     }
-    
     console.log(this.data);
     this.firechat.agregarMensaje(this.data)
                   .then( ()=> this.data.mensaje ="" )
