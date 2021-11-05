@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collectionData, collection, addDoc} from '@angular/fire/firestore';
+import { Firestore, collectionData, collection, addDoc, orderBy} from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import {map} from "rxjs/operators";
 import { Mensaje } from "../interface/mensaje.interface"
@@ -16,6 +16,9 @@ export class FirechatService {
 
   obtenerCollection(){
     const dataCol = collection(this.firestore, 'chats');
+    const data = collectionData(dataCol)
+
+
     return collectionData(dataCol)
                         .pipe( map( (data) => {
                            const mensajes = data as Mensaje[]
@@ -25,6 +28,7 @@ export class FirechatService {
   }
 
   agregarMensaje(mensaje: Mensaje){
+    mensaje.fecha = new Date().getTime();
     const dataCol = collection(this.firestore, "chats");
     return addDoc(dataCol, mensaje)
   }
