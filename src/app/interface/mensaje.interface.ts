@@ -1,6 +1,6 @@
 export interface Mensaje {
     nombre?: string,
     mensaje: string,
-    fecha?: string,
+    fecha?: any,
     uid?: string,
 }
