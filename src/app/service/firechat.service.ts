@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Firestore, collectionData, collection, addDoc, orderBy} from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection} from '@angular/fire/compat/firestore/';
+
 import { Observable } from 'rxjs';
 import {map} from "rxjs/operators";
 import { Mensaje } from "../interface/mensaje.interface"
@@ -10,26 +12,26 @@ import { Mensaje } from "../interface/mensaje.interface"
 })
 export class FirechatService {
  
-  constructor(private firestore: Firestore) { }
+  constructor(private afs: AngularFirestore) { }
 
+  private itemsCollection: AngularFirestoreCollection<any>
   public chats: Mensaje[]= [];
 
   obtenerCollection(){
-    const dataCol = collection(this.firestore, 'chats');
-    const data = collectionData(dataCol)
-
-
-    return collectionData(dataCol)
-                        .pipe( map( (data) => {
-                           const mensajes = data as Mensaje[]
-                           this.chats = mensajes
-                           console.log(this.chats);
-                        }))                
+    this.itemsCollection = this.afs.collection("chats", ref => ref.orderBy("fecha", "desc").limit(15))
+    return this.itemsCollection.valueChanges()
+                          .pipe( map( (data) => {
+                             this.chats= []
+                             const mensajes = data as Mensaje[]
+                             for(let mensaje of mensajes){
+                               this.chats.unshift(mensaje)
+                             }
+                          }))              
   }
 
   agregarMensaje(mensaje: Mensaje){
     mensaje.fecha = new Date().getTime();
-    const dataCol = collection(this.firestore, "chats");
-    return addDoc(dataCol, mensaje)
+    return this.itemsCollection.add(mensaje)
+    // return addDoc(dataCol, mensaje)
   }
 }
