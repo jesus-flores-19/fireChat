@@ -1,7 +1,17 @@
-<div class="app-mensajes">
-    <div class="text-end" *ngFor="let chat of firechat.chats">
-        <span class="badge bg-primary">Fernando</span>
+<div class="row mb-3">
+    <div class="col-auto ms-auto">
+        <button class="btn btn-danger" [disabled]="data.nombre == 'jesus'" (click)="usuario('mueguis')">Mueguis</button>
+    </div>
+    <div class="col-auto">
+        <button class="btn btn-dark" [disabled]="data.nombre == 'mueguis'" (click)="usuario('jesus')">Jesus</button>
+    </div>
+</div>
+
+<div class="app-mensajes " id="app-mensajes ">
+    <div *ngFor="let chat of firechat.chats ">
+        <span class="badge bg-primary text-end ">{{chat.nombre}}</span>
         <p>{{chat.mensaje}}</p>
     </div>
 </div>
-<input type="text" name="mensaje" class="form-control" [(ngModel)]="data.mensaje" (keyup.enter)="enviarMensaje()" placeholder="Escribir mensaje...">>
+
+<input type="text " name="mensaje " class="form-control " [(ngModel)]="data.mensaje " (keyup.enter)="enviarMensaje() " placeholder="Escribir mensaje... ">
