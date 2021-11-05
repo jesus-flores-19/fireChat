@@ -7,9 +7,9 @@
     </div>
 </div>
 
-<div class="app-mensajes " id="app-mensajes ">
-    <div *ngFor="let chat of firechat.chats ">
-        <span class="badge bg-primary text-end ">{{chat.nombre}}</span>
+<div class="app-mensajes " id="app-mensajes">
+    <div [ngClass]="{'text-end': data.nombre == chat.nombre}" *ngFor="let chat of firechat.chats">
+        <span class="badge" [ngClass]="{'bg-dark': chat.nombre == 'jesus', 'bg-danger': chat.nombre == 'mueguis'}">{{chat.nombre}}</span>
         <p>{{chat.mensaje}}</p>
     </div>
 </div>
