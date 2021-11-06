@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FirechatService } from 'src/app/service/firechat.service';
 
 @Component({
   selector: 'app-login',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  constructor(private firechat: FirechatService) { }
 
   ngOnInit(): void {
+  }
+
+  ingresar(provedor: string){
+    this.firechat.login()
   }
 
 }

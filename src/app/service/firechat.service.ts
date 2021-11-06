@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collectionData, collection, addDoc, orderBy} from '@angular/fire/firestore';
 import { AngularFirestore, AngularFirestoreCollection} from '@angular/fire/compat/firestore/';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import firebase from 'firebase/compat/app';
 
 import { Observable } from 'rxjs';
 import {map} from "rxjs/operators";
@@ -12,7 +13,7 @@ import { Mensaje } from "../interface/mensaje.interface"
 })
 export class FirechatService {
  
-  constructor(private afs: AngularFirestore) { }
+  constructor(private afs: AngularFirestore, private auth: AngularFireAuth) { }
 
   private itemsCollection: AngularFirestoreCollection<any>
   public chats: Mensaje[]= [];
@@ -33,5 +34,8 @@ export class FirechatService {
     mensaje.fecha = new Date().getTime();
     return this.itemsCollection.add(mensaje)
     // return addDoc(dataCol, mensaje)
+  }
+  login(){
+    this.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider());
   }
 }
