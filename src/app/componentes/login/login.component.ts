@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
   }
 
   ingresar(provedor: string){
-    this.firechat.login()
+    this.firechat.login(provedor)
   }
-
+ 
 }
