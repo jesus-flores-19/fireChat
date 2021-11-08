@@ -1,15 +1,6 @@
-<div class="row mb-3">
-    <div class="col-auto ms-auto">
-        <button class="btn btn-danger" [disabled]="data.nombre == 'jesus'" (click)="usuario('mueguis')">Mueguis</button>
-    </div>
-    <div class="col-auto">
-        <button class="btn btn-dark" [disabled]="data.nombre == 'mueguis'" (click)="usuario('jesus')">Jesus</button>
-    </div>
-</div>
-
 <div class="app-mensajes " id="app-mensajes">
-    <div [ngClass]="{'text-end': data.nombre == chat.nombre}" *ngFor="let chat of firechat.chats">
-        <span class="badge" [ngClass]="{'bg-dark': chat.nombre == 'jesus', 'bg-danger': chat.nombre == 'mueguis'}">{{chat.nombre}}</span>
+    <div [ngClass]="{'text-end': firechat.usuario.uid == chat.uid}" *ngFor="let chat of firechat.chats">
+        <span class="badge" [ngClass]="{'bg-dark': firechat.usuario.uid == chat.uid, 'bg-danger': firechat.usuario.uid != chat.uid}">{{chat.nombre}}</span>
         <p>{{chat.mensaje}}</p>
     </div>
 </div>
