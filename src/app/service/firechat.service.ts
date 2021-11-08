@@ -13,13 +13,28 @@ import { Mensaje } from "../interface/mensaje.interface"
 })
 export class FirechatService {
  
-  constructor(private afs: AngularFirestore, private auth: AngularFireAuth) { }
+  constructor(private afs: AngularFirestore, private auth: AngularFireAuth) {
+
+    this.auth.authState.subscribe( user =>{
+      console.log("Estado de usuario: ", user);
+      if(!user){
+        return;
+      }
+      
+      this.usuario.nombre = user.displayName;
+      this.usuario.uid = user.uid
+      console.log(this.usuario);
+      
+    })
+    this.itemsCollection = this.afs.collection("newchat", ref => ref.orderBy("fecha", "desc").limit(15));
+
+   }
 
   private itemsCollection: AngularFirestoreCollection<any>
   public chats: Mensaje[]= [];
+  public usuario: any = {}
 
   obtenerCollection(){
-    this.itemsCollection = this.afs.collection("chats", ref => ref.orderBy("fecha", "desc").limit(15))
     return this.itemsCollection.valueChanges()
                           .pipe( map( (data) => {
                              this.chats= []
@@ -32,10 +47,24 @@ export class FirechatService {
 
   agregarMensaje(mensaje: Mensaje){
     mensaje.fecha = new Date().getTime();
+    mensaje.uid = this.usuario.uid;
+    mensaje.nombre = this.usuario.nombre
     return this.itemsCollection.add(mensaje)
     // return addDoc(dataCol, mensaje)
   }
-  login(){
-    this.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider());
+
+  login(proveedor: string){
+    if(proveedor === "facebook"){
+      this.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider());
+    }
+    if(proveedor === "google"){
+      this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+    }
+  }
+  
+  logout(){
+    this.auth.signOut().then(()=>{
+      this.usuario = {}
+    });
   }
 }
