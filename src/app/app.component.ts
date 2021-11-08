@@ -8,6 +8,12 @@ import { FirechatService } from './service/firechat.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
+  constructor(public fireService: FirechatService){
+  }
   title = 'fireChat';
-  
+  loggout(){
+    this.fireService.logout();
+  }
+
 }
