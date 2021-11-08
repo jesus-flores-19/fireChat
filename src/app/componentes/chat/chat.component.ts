@@ -10,21 +10,6 @@ import { FirechatService } from 'src/app/service/firechat.service';
 export class ChatComponent implements OnInit {
 
   constructor(public firechat: FirechatService) { 
-    
-  }
-
-  data: Mensaje= {
-    mensaje: "",
-    nombre: ""
-  };
-  elemento: any;
-
-  ngOnInit(): void {
-    this.elemento = document.getElementById("app-mensajes")
-  }
-
-  usuario(nombre: any){
-    this.data.nombre = nombre
     this.firechat.obtenerCollection().subscribe( () => {
       setTimeout(()=>{
         this.elemento.scrollTop = this.elemento.scrollHeight;
@@ -32,11 +17,20 @@ export class ChatComponent implements OnInit {
     });
   }
 
+  data: Mensaje= {
+    mensaje: "",
+  };
+
+  elemento: any;
+
+  ngOnInit(): void {
+    this.elemento = document.getElementById("app-mensajes")
+  }
+
   enviarMensaje(){
     if(this.data.mensaje.length == 0) return;
-    if(this.data.nombre?.length==0){
-      alert("escogueee un usuario xd")
-      return;
+    if(!this.firechat.usuario.uid){
+      alert("sin usuario, loggueate")
     }
     console.log(this.data);
     this.firechat.agregarMensaje(this.data)
