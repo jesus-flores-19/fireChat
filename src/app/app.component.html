@@ -1,8 +1,12 @@
 <div class="container main-container">
     <h1 class="display-4">FireChat</h1>
     <div class="row justify-content-center">
-        <app-login></app-login>
-        <div class="chat-window mt-4">
+        <hr>
+        <app-login *ngIf="!fireService.usuario.uid"></app-login>
+        <div class="col-12 text-end" *ngIf="fireService.usuario.uid">
+            <button class="btn btn-secondary" (click)="loggout()">Salir</button>
+        </div>
+        <div class="chat-window mt-4" *ngIf="fireService.usuario.uid">
             <app-chat></app-chat>
         </div>
     </div>
